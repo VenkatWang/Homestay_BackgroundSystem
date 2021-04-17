@@ -1,14 +1,15 @@
 <template>
     <div class="login">
+        <div class="login-title">中北大学民宿小程序后台管理系统</div>
         <div class="login-content">
-            <el-form ref="loginFrom" :model="loginFrom" :rules="rules">
+            <el-form ref="loginForm" :model="loginForm" :rules="rules">
                 <el-form-item label="用户名：" prop="username">
-                    <el-input v-model="loginFrom.username">
+                    <el-input v-model="loginForm.username">
 
                     </el-input>
                 </el-form-item>
                 <el-form-item label="密 码：" prop="password">
-                    <el-input v-model="loginFrom.password">
+                    <el-input v-model="loginForm.password">
 
                     </el-input>
                 </el-form-item>
@@ -21,11 +22,14 @@
 </template>
 
 <script>
+    import axios from "axios";
+    import {URL} from "../lib/base"
+
     export default {
         name: "Login",
         data() {
             return {
-                loginFrom: {
+                loginForm: {
                     username: "",
                     password: ""
                 },
@@ -43,11 +47,24 @@
         },
         methods: {
             handleLogin() {
-                this.$refs.loginFrom.validate(valid => {
-                    // console.log(valid);
-                    if (valid){
-                        console.log(this.loginFrom);
-                        this.$router.push({path:"/"})
+                this.$refs.loginForm.validate(valid => {
+                    if (valid) {
+                        // let that = this;
+                        // let url1 = "http://homestay/homestay-admin/public/index.php/admin/login/check"
+                        axios.post(URL+"/admin/login/check", this.loginForm)
+                            .then((res) => {
+                                console.log(res);
+                                if (res.status === 200 && res.data.code === 200) {
+                                    sessionStorage.setItem("token", res.data.token);
+                                    let redirect = this.$route.query.redirect || "index";
+                                    this.$message({message: "登录成功", type: "success"})
+                                    this.$router.push({name: redirect})
+                                } else {
+                                    this.$message.error(res.data.msg)
+                                }
+                            }).catch((error) => {
+                            console.log(error);
+                        })
                     }
                 })
 
@@ -75,9 +92,20 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -30%);
         border-radius: 5px;
         background: #fff;
         padding: 20px;
+    }
+
+    .login > .login-title {
+        width: 100%;
+        position: absolute;
+        /*left: 50%;*/
+        top: 120px;
+        /*transform: translateX(-50%);*/
+        text-align: center;
+        font-size: 50px;
+        font-weight: bold;
     }
 </style>
