@@ -6,9 +6,11 @@ Vue.use(VueRouter)
 import Login from "../views/Login";
 import Main from "../views/main/Main";
 import List from "../views/main/List";
-import Categoryadd from "../views/main/category/Add"
-// import MainContainer from "../views/main/MainContainer";
+import Categoryadd from "../views/main/category/Add";
+import Categoryindex from "../views/main/category/Index"
 import MainContainer from "../views/main/MainContainer";
+import Categoryedit from "../views/main/category/Categoryedit";
+import UserIndex from "../views/main/user/UserIndex";
 let routes = [
     {
         path: "/",
@@ -33,6 +35,34 @@ let routes = [
                 component: Categoryadd,
                 name: "categoryadd",
                 meta: {
+                    title:"分类添加",
+                    auth: true
+                }
+            },
+            {
+                path: "categoryindex",
+                component: Categoryindex,
+                name: "categoryindex",
+                meta: {
+                    title: "分类查看",
+                    auth: true
+                }
+            },
+            {
+                path: "categoryedit",
+                component: Categoryedit,
+                name: "categoryedit",
+                meta: {
+                    title: "分类编辑",
+                    auth: true
+                }
+            },
+            {
+                path: "userindex",
+                component: UserIndex,
+                name: "userindex",
+                meta: {
+                    title: "用户管理",
                     auth: true
                 }
             }

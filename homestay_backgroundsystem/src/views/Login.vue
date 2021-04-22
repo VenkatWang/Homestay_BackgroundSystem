@@ -9,7 +9,7 @@
                     </el-input>
                 </el-form-item>
                 <el-form-item label="密 码：" prop="password">
-                    <el-input v-model="loginForm.password">
+                    <el-input type="password" v-model="loginForm.password" autocomplete="off">
 
                     </el-input>
                 </el-form-item>
@@ -56,6 +56,7 @@
                                 console.log(res);
                                 if (res.status === 200 && res.data.code === 200) {
                                     sessionStorage.setItem("token", res.data.token);
+                                    sessionStorage.setItem("user",JSON.stringify(res.data.user));
                                     let redirect = this.$route.query.redirect || "index";
                                     this.$message({message: "登录成功", type: "success"})
                                     this.$router.push({name: redirect})

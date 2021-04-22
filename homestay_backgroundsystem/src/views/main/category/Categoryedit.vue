@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div v-if="category">
+        <div>分类编辑</div>
         <el-form :model="category" :rules="categoryRules" ref="categoryform">
             <el-form-item label="分类名称" prop="cname">
                 <el-input v-model="category.cname" placeholder="请输入分类名称(2-6位的汉字)"></el-input>
@@ -19,7 +20,7 @@
     import {URL} from "../../../lib/base";
 
     export default {
-        name: "Add",
+        name: "Categoryedit",
         data() {
             //自定义验证规则
             let validateCname = (rule, value, callback) => {
@@ -32,10 +33,7 @@
                 }
             };
             return {
-                category: {
-                    cname: "",
-                    cdesc: ""
-                },
+                category: null,
                 categoryRules: {
                     cname: [
                         // {required: true, message: "分类名称必填", trigger: "blur"},
@@ -48,11 +46,15 @@
                 }
             }
         },
+        mounted() {
+            let cid = this.$route.query.cid;
+            this.initCategory(cid);
+        },
         methods: {
             handlerSubmit() {
                 this.$refs.categoryform.validate(valid => {
                     if (valid) {
-                        let url = URL + "/admin/category/add"
+                        let url = URL + "/admin/category/editsubmit"
                         let token = sessionStorage.getItem("token")
                         axios({
                             url,
@@ -64,11 +66,39 @@
                         }).then(res => {
                             if (res.status === 200 && res.data.code === 200) {
                                 this.$message.success(res.data.msg)
+                                this.$router.push({path:"/categoryindex"})
+                            }else{
+                                this.$message.info(res.data.msg)
                             }
-                        }).catch(()=>{
-                            this.$message.error("分类添加失败")
+                        }).catch(() => {
+                            this.$message.error("分类更新失败")
                         })
                     }
+                })
+            },
+            initCategory(cid) {
+                let url = URL + "/admin/category/read";
+                let token = sessionStorage.getItem("token");
+                axios({
+                    methods: "GET",
+                    url,
+                    params: {
+                        cid
+                    },
+                    headers: {
+                        token
+                    }
+                }).then(res => {
+                    if (res.status === 200 && res.data.code === 200) {
+                        if (res.data.data) {
+                            this.category = res.data.data;
+                        } else {
+                            this.$message.error(res.data.msg);
+                        }
+
+                    }
+                }).catch(() => {
+
                 })
             }
         }
