@@ -9,50 +9,57 @@
                     <el-menu mode="horizontal">
                         <el-menu-item index="1">指南</el-menu-item>
                         <el-submenu index="2">
-                            <template slot="title">{{username}}</template>
+                            <template slot="title">
+                                <img :src="avatarUrl" alt="" style="width: 30px;height: 30px;border-radius: 50%">
+                                <span>&nbsp;&nbsp;</span>
+                                {{username}}
+                            </template>
                             <el-menu-item @click="handleChangePass">修改密码</el-menu-item>
                             <el-menu-item @click="handleExit">退出登录</el-menu-item>
                         </el-submenu>
                     </el-menu>
                 </div>
             </el-header>
-            <el-container>
+            <el-container style="height: 90%">
                 <el-aside width="200px">
-                    <el-menu>
+                    <el-menu active-text-color="#303133">
                         <el-submenu index="1">
                             <template slot="title">
-                                <i class="el-icon-s-unfold"></i>
+                                <i class="el-icon-s-unfold" style="color: #303133"></i>
                                 <span>分类管理</span>
                             </template>
                             <el-menu-item>
-                                <router-link to="/categoryadd" tag="div">分类添加</router-link>
+                                <router-link to="/categoryadd" tag="span">分类添加</router-link>
                             </el-menu-item>
                             <el-menu-item>
-                                <router-link :to="{path:'/categoryindex'}" tag="div">分类查看</router-link>
+                                <router-link :to="{path:'/categoryindex'}" tag="span">分类查看</router-link>
                             </el-menu-item>
                         </el-submenu>
                         <el-submenu index="2">
                             <template slot="title">
-                                <i class="el-icon-s-unfold"></i>
-                                <span>民宿发布</span>
+                                <i class="el-icon-s-home" style="color: #303133"></i>
+                                <span>民宿管理</span>
                             </template>
+                            <el-menu-item>
+                                <router-link to="/homestayadd" tag="div">民宿发布</router-link>
+                            </el-menu-item>
+                            <el-menu-item>
+                                <router-link to="/homestayindex" tag="div">民宿查看</router-link>
+                            </el-menu-item>
                         </el-submenu>
-                        <el-submenu index="3">
-                            <template slot="title">
-                                <i class="el-icon-s-unfold"></i>
-                                <!--                                <span>用户管理</span>-->
-                                <router-link :to="{path:'/userindex'}">用户管理</router-link>
-                            </template>
-                        </el-submenu>
+                        <el-menu-item index="3">
+                            <i class="el-icon-s-custom" style="color: #303133"></i>
+                            <router-link :to="{path:'/userindex'}" tag="span">用户管理</router-link>
+                        </el-menu-item>
                         <el-submenu index="4">
                             <template slot="title">
-                                <i class="el-icon-s-unfold"></i>
+                                <i class="el-icon-s-order" style="color: #303133"></i>
                                 <span>订单管理</span>
                             </template>
                         </el-submenu>
                         <el-submenu index="5">
                             <template slot="title">
-                                <i class="el-icon-s-unfold"></i>
+                                <i class="el-icon-s-data" style="color: #303133"></i>
                                 <span>数据统计</span>
                             </template>
                         </el-submenu>
@@ -89,7 +96,7 @@
 </template>
 
 <script>
-    import {URL} from "../../lib/base"
+    import {IMGURL, URL} from "../../lib/base"
 
     export default {
         name: "Main",
@@ -102,11 +109,13 @@
                     newpassagain: ""
                 },
                 formLabelWidth: '100px',
-                username: ""
+                username: "",
+                avatarUrl: ""
             }
         },
         created() {
             this.username = JSON.parse(sessionStorage.getItem("user")).username;
+            this.avatarUrl = IMGURL + JSON.parse(sessionStorage.getItem("user")).avatar;
         },
         methods: {
             handleExit() {
@@ -174,6 +183,13 @@
 </script>
 
 <style scoped>
+    a {
+        color: inherit;
+        text-decoration: none;
+        /*display: block;*/
+        border: none;
+    }
+
     .main-box {
         position: absolute;
         left: 0;
@@ -191,9 +207,8 @@
     }
 
     .el-header .nav {
-        width: 200px;
+        width: 300px;
         height: 100%;
-        background-color: red;
     }
 
     .el-menu {

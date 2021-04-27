@@ -11,6 +11,9 @@ import Categoryindex from "../views/main/category/Index"
 import MainContainer from "../views/main/MainContainer";
 import Categoryedit from "../views/main/category/Categoryedit";
 import UserIndex from "../views/main/user/UserIndex";
+import Homestayadd from "../views/main/homestay/Homestayadd";
+import Homestayindex from "../views/main/homestay/Homestayindex";
+import Homestayedit from "../views/main/homestay/Homestayedit";
 let routes = [
     {
         path: "/",
@@ -54,6 +57,33 @@ let routes = [
                 name: "categoryedit",
                 meta: {
                     title: "分类编辑",
+                    auth: true
+                }
+            },
+            {
+                path: "homestayadd",
+                component: Homestayadd,
+                name: "homestayadd",
+                meta: {
+                    title: "民宿添加",
+                    auth: true
+                }
+            },
+            {
+                path: "homestayindex",
+                component: Homestayindex,
+                name: "homestayindex",
+                meta: {
+                    title: "民宿查看",
+                    auth: true
+                }
+            },
+            {
+                path: "homestayedit/:sid",
+                component: Homestayedit,
+                name: "homestayedit",
+                meta: {
+                    title: "民宿编辑",
                     auth: true
                 }
             },

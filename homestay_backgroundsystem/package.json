@@ -14,7 +14,8 @@
     "element-ui": "^2.15.1",
     "u-reset.css": "^1.0.10",
     "vue": "^2.6.11",
-    "vue-router": "^3.5.1"
+    "vue-router": "^3.5.1",
+    "wangeditor": "^4.6.16"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",

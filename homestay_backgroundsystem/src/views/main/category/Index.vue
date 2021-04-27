@@ -1,5 +1,5 @@
 <template>
-    <div class="index">
+    <div class="index" v-loading="isLoading">
         <el-form class="search" :inline="true">
             <el-form-item label="分类搜索">
                 <el-input v-model="search.cname" placeholder="分类名称"></el-input>
@@ -49,11 +49,13 @@
                     limit: 5
                 },
                 categories: [],
-                total: 0
+                total: 0,
+                isLoading: true
             }
         },
         methods: {
             initCategory() {
+                this.isLoading = true;
                 let url = URL + "/admin/category/index";
                 let token = sessionStorage.getItem("token");
                 let params = Object.assign({}, this.paginate, this.search);
@@ -66,6 +68,7 @@
                     }
                 }).then(res => {
                     if (res.status === 200 && res.data.code === 200) {
+                        this.isLoading = false;
                         if (res.data.data) {
                             this.categories = res.data.data;
                             this.total = res.data.total;
@@ -74,6 +77,7 @@
                         }
                     }
                 }).catch(() => {
+                    this.isLoading = false;
                     this.$message.error("分类数据请求失败");
                 })
             },
@@ -85,8 +89,8 @@
                 this.paginate.page = 1;
                 this.initCategory();
             },
-            handleEdit(cid){
-                this.$router.push({path:"/categoryedit",query:{cid}})
+            handleEdit(cid) {
+                this.$router.push({path: "/categoryedit", query: {cid}})
             }
         },
         mounted() {
@@ -106,7 +110,7 @@
     }
 
     .paginate {
-        position: absolute;
-        top: 450px;
+        position: relative;
+        top: 30px;
     }
 </style>
