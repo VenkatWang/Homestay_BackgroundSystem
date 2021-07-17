@@ -51,18 +51,26 @@
                             <i class="el-icon-s-custom" style="color: #303133"></i>
                             <router-link :to="{path:'/userindex'}" tag="span">用户管理</router-link>
                         </el-menu-item>
-                        <el-submenu index="4">
-                            <template slot="title">
-                                <i class="el-icon-s-order" style="color: #303133"></i>
-                                <span>订单管理</span>
-                            </template>
-                        </el-submenu>
-                        <el-submenu index="5">
-                            <template slot="title">
-                                <i class="el-icon-s-data" style="color: #303133"></i>
-                                <span>数据统计</span>
-                            </template>
-                        </el-submenu>
+                        <el-menu-item index="4">
+                            <i class="el-icon-s-order" style="color: #303133"></i>
+                            <router-link :to="{path:'/order'}" tag="span">订单管理</router-link>
+                        </el-menu-item>
+<!--                        <el-submenu index="4">-->
+<!--                            <template slot="title">-->
+<!--                                <i class="el-icon-s-order" style="color: #303133"></i>-->
+<!--                                <span>订单管理</span>-->
+<!--                            </template>-->
+<!--                        </el-submenu>-->
+                        <el-menu-item index="5">
+                            <i class="el-icon-s-data" style="color: #303133"></i>
+                            <router-link :to="{path:'/datashow'}" tag="span">数据统计</router-link>
+                        </el-menu-item>
+<!--                        <el-submenu index="5">-->
+<!--                            <template slot="title">-->
+<!--                                <i class="el-icon-s-data" style="color: #303133"></i>-->
+<!--                                <span>数据统计</span>-->
+<!--                            </template>-->
+<!--                        </el-submenu>-->
                     </el-menu>
                 </el-aside>
                 <el-container>

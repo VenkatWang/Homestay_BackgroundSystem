@@ -17,7 +17,7 @@
                     width="143">
                 <template slot-scope="scope">
                     <el-button @click="handleEdit(scope.row.cid)" type="success" size="small">编辑</el-button>
-                    <el-button type="danger" size="small">删除</el-button>
+                    <el-button type="danger" size="small" @click="handleDelete(scope.row.cid)">删除</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -36,6 +36,7 @@
 <script>
     import axios from "axios";
     import {URL} from "../../../lib/base";
+    import {categoryDelete} from "../../../http/category";
 
     export default {
         name: "Index",
@@ -91,6 +92,18 @@
             },
             handleEdit(cid) {
                 this.$router.push({path: "/categoryedit", query: {cid}})
+            },
+            handleDelete(cid){
+                categoryDelete(cid).then(
+                    res=>{
+                        if(res.code===404){
+                            this.$message.error(res.msg);
+                        }else{
+                            this.$message.success(res.msg);
+                            this.initCategory();
+                        }
+                    }
+                ).catch()
             }
         },
         mounted() {

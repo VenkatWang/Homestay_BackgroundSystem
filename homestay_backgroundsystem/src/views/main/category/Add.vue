@@ -63,7 +63,8 @@
                             }
                         }).then(res => {
                             if (res.status === 200 && res.data.code === 200) {
-                                this.$message.success(res.data.msg)
+                                this.$message.success(res.data.msg);
+                                this.$router.push("/categoryindex");
                             }
                         }).catch(()=>{
                             this.$message.error("分类添加失败")

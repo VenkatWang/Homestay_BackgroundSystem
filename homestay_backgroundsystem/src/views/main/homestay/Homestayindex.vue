@@ -2,7 +2,7 @@
     <div v-loading="isLoading">
         <el-form inline :model="search">
             <el-form-item label="所属分类">
-                <el-select v-model="search.cid" placeholder="分类筛选">
+                <el-select v-model="search.cid" clearable placeholder="分类筛选">
                     <el-option
                             v-for="item in categorys"
                             :key="item.cid"
@@ -20,11 +20,13 @@
         </el-form>
         <div v-if="homestay.length">
             <el-table :data="homestay" border>
-                <el-table-column label="ID" prop="sid" width="50" header-align="center" align="center"></el-table-column>
+                <el-table-column label="ID" prop="sid" width="50" header-align="center"
+                                 align="center"></el-table-column>
                 <el-table-column label="名称" prop="sname" width="130" header-align="center"></el-table-column>
                 <el-table-column label="描述" prop="sdesc" header-align="center">
                 </el-table-column>
-                <el-table-column label="价格" prop="sprice" width="80" header-align="center" align="center"></el-table-column>
+                <el-table-column label="价格" prop="sprice" width="80" header-align="center"
+                                 align="center"></el-table-column>
                 <el-table-column label="标签" prop="stag" width="130" header-align="center" align="center">
                     <template slot-scope="scope">
                         <el-tag v-for="item in scope.row.stag.split(/,|，/)" :key="item" :type="tagType(item)">
@@ -44,13 +46,20 @@
                         <i class="el-icon-star-on" style="color:#FF9900"></i>
                     </template>
                 </el-table-column>
-                <el-table-column label="发布时间" prop="stime" width="100" header-align="center"></el-table-column>
+                <el-table-column label="发布/更新时间" prop="stime" width="110" header-align="center" align="center">
+                    <template slot-scope="scope">
+                        <div>{{scope.row.stime.split(" ")[0]}}</div>
+                        <div>{{scope.row.stime.split(" ")[1]}}</div>
+                    </template>
+                </el-table-column>
                 <el-table-column label="操作" prop="" width="187" header-align="center">
                     <template slot-scope="scope">
                         <el-button-group>
-                            <el-button type="primary" icon="el-icon-view"></el-button>
-                            <el-button type="success" icon="el-icon-edit" @click="handleCheck(scope.row.sid)"></el-button>
-                            <el-button type="danger" icon="el-icon-delete"></el-button>
+                            <el-button type="primary" icon="el-icon-view" @click="handleView(scope.row.sid)"></el-button>
+                            <el-button type="success" icon="el-icon-edit"
+                                       @click="handleCheck(scope.row.sid)"></el-button>
+                            <el-button type="danger" icon="el-icon-delete"
+                                       @click="handleDelete(scope.row.sid)"></el-button>
                         </el-button-group>
                     </template>
                 </el-table-column>
@@ -71,14 +80,14 @@
 <script>
     import {IMGURL} from "../../../lib/base";
     import {categoryIndex} from "../../../http/category";
-    import {homestayIndex} from "../../../http/homestay";
+    import {homestayDelete, homestayIndex} from "../../../http/homestay";
 
     export default {
         name: "Homestayindex",
         data() {
             return {
                 search: {sname: "", cid: ""},
-                paginate: {limit: 5, page: 1},
+                paginate: {limit:7, page: 1},
                 homestay: [],
                 total: 0,
                 categorys: [],
@@ -134,12 +143,30 @@
                 this.paginate.page = 1;
                 this.initHomestay();
             },
-            handleCheck(sid){
+            handleView(sid){
                 this.$router.push({
-                    name:"homestayedit",
+                    name:"homestayview",
                     params:{
                         sid
                     }
+                })
+            },
+            handleCheck(sid) {
+                this.$router.push({
+                    name: "homestayedit",
+                    params: {
+                        sid
+                    }
+                })
+            },
+            handleDelete(sid) {
+                homestayDelete(sid).then(
+                    res => {
+                        this.$message.success(res.msg);
+                        this.initHomestay();
+                    }
+                ).catch((error) => {
+                    this.$message.error(error)
                 })
             }
         },

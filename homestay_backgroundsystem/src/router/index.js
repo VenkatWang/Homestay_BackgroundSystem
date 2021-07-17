@@ -14,10 +14,14 @@ import UserIndex from "../views/main/user/UserIndex";
 import Homestayadd from "../views/main/homestay/Homestayadd";
 import Homestayindex from "../views/main/homestay/Homestayindex";
 import Homestayedit from "../views/main/homestay/Homestayedit";
+import HomestayView from "../views/main/homestay/HomestayView";
+import Order from "../views/main/order/Order";
+import DataShow from "../views/main/datashow/DataShow";
+
 let routes = [
     {
         path: "/",
-        redirect:"/maincontainer",
+        redirect: "/maincontainer",
         component: Main,
         name: "index",
         //路由元信息，用来设置是否需要验证
@@ -38,7 +42,7 @@ let routes = [
                 component: Categoryadd,
                 name: "categoryadd",
                 meta: {
-                    title:"分类添加",
+                    title: "分类添加",
                     auth: true
                 }
             },
@@ -88,11 +92,38 @@ let routes = [
                 }
             },
             {
+                path: "homestayview/:sid",
+                component: HomestayView,
+                name: "homestayview",
+                meta: {
+                    title: "民宿查看",
+                    auth: true
+                }
+            },
+            {
                 path: "userindex",
                 component: UserIndex,
                 name: "userindex",
                 meta: {
                     title: "用户管理",
+                    auth: true
+                }
+            },
+            {
+                path: "order",
+                component: Order,
+                name: "order",
+                meta: {
+                    title: "订单管理",
+                    auth: true
+                }
+            },
+            {
+                path: "datashow",
+                component: DataShow,
+                name: "DataShow",
+                meta: {
+                    title: "数据统计",
                     auth: true
                 }
             }

@@ -82,7 +82,7 @@
         right: 0;
         bottom: 0;
         /*background: #f5f5f5;*/
-        background-image: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fac-q.static.booking.cn%2Fimages%2Fhotel%2Fmax1024x768%2F120%2F120912261.jpg&refer=http%3A%2F%2Fac-q.static.booking.cn&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1621002716&t=83197c66081dfa70caeef546a3884674");
+        background-image: url("../assets/imgs/cover.jpg");
         background-repeat: no-repeat;
         background-size: cover;
     }
@@ -95,7 +95,7 @@
         top: 50%;
         transform: translate(-50%, -30%);
         border-radius: 5px;
-        background: #fff;
+        background: rgba(245,245,245,0.8);
         padding: 20px;
     }
 
@@ -108,5 +108,6 @@
         text-align: center;
         font-size: 50px;
         font-weight: bold;
+        color: white;
     }
 </style>

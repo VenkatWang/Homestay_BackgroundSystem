@@ -4,8 +4,12 @@ function categoryAdd() {
 
 }
 
-function categoryDelete() {
-
+function categoryDelete(cid) {
+    return instance({
+        method: "POST",
+        url: "/admin/category/categoryDelete",
+        data:{cid}
+    });
 }
 
 function categoryUpdate() {
